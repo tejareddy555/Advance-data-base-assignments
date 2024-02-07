@@ -1,0 +1,172 @@
+use sample_airbnb
+db.listingsAndReviews.find({
+  $and: [
+    { amenities: "Wifi" },
+    { amenities: "TV" }
+  ]
+});
+
+
+
+// Switch to the "sample_airbnb" database
+use sample_airbnb
+
+// Switched to the "sample_airbnb" database
+switched to db sample_airbnb
+
+// Find documents in the "listingsAndReviews" collection
+db.listingsAndReviews.find({
+  // Use $and to specify that documents must satisfy all sets of conditions
+  $and: [
+    // First set of conditions: Either "Iron" or "Washer" should be among the amenities
+    {
+      $or: [
+        { amenities: "Iron" },
+        { amenities: "Washer" }
+      ]
+    },
+    // Second set of conditions: Either "Stove" or "Dishwasher" should be among the amenities
+    {
+      $or: [
+        { amenities: "Stove" },
+        { amenities: "Dishwasher" }
+      ]
+    }
+  ]
+});
+
+
+//greaterthan
+db.grades.find({
+  // Specify the condition: "grade" field should be greater than 59
+  grade: {
+    $gt: 59
+  }
+});
+
+
+//greaterthan equalto
+db.grades.find({
+  // Specify the condition: "score" field within the "products" array should be less than 59
+  "products.score": {
+    $gte: 59
+  }
+});
+
+
+
+//insertmany
+db.grades.insertMany([
+  {
+    student_id: 546789,
+    products: [
+      {
+        type: "quiz",
+        score: 50,
+      },
+      {
+        type: "homework",
+        score: 70,
+      },
+      {
+        type: "quiz",
+        score: 66,
+      },
+      {
+        type: "exam",
+        score: 70,
+      },
+    ],
+    class_id: 551,
+  },
+  {
+    student_id: 777777,
+    products: [
+      {
+        type: "exam",
+        score: 83,
+      },
+      {
+        type: "quiz",
+        score: 59,
+      },
+      {
+        type: "quiz",
+        score: 72,
+      },
+      {
+        type: "quiz",
+        score: 67,
+      },
+    ],
+    class_id: 550,
+  },
+  {
+    student_id: 223344,
+    products: [
+      {
+        type: "exam",
+        score: 45,
+      },
+      {
+        type: "homework",
+        score: 39,
+      },
+      {
+        type: "quiz",
+        score: 40,
+      },
+      {
+        type: "homework",
+        score: 88,
+      },
+    ],
+    class_id: 551,
+  },
+])
+
+//insertone
+db.grades.insertOne({
+  student_id: 654321,
+  products: [
+    {
+      type: "exam",
+      score: 90,
+    },
+    {
+      type: "homework",
+      score: 59,
+    },
+    {
+      type: "quiz",
+      score: 75,
+    },
+    {
+      type: "homework",
+      score: 88,
+    },
+  ],
+  class_id: 550,
+})
+
+
+
+//lesserthan
+db.grades.find({
+  // Use the $lt (less than) operator to specify that the "score" field within "products" should be less than 59
+  "products.score": {
+    $lt: 59
+  }
+});
+
+
+
+//lessthanequalto
+db.grades.find({
+  // Specify the condition: "score" field within the "products" array should be less than 59
+  "products.score": {
+    $lte: 59
+  }
+});
+
+
